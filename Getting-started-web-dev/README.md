@@ -1,3 +1,3 @@
-Presentation - http://hgonzago.github.io/DevSummit-presentations/Dev-Summit-2018/Getting-started-web-dev/
+Presentation - https://kellyhutchins.github.io/UC-2018-Sessions/Getting-started-web-dev/index.html#/
 
-Demos - http://hgonzago.github.io/DevSummit-presentations/Dev-Summit-2018/Getting-started-web-dev/Demos
+Demos - https://kellyhutchins.github.io/UC-2018-Sessions/Getting-started-web-dev/Demos/index.html#/
