@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "lib": [
+            "es5",
+            "es2015.promise",
+            "dom",
+            "scripthost"
+        ],
+        "module": "amd",
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "jsx": "react",
+        "jsxFactory": "tsx",
+        "target": "es5",
+        "experimentalDecorators": true,
+        "esModuleInterop": true,
+        "preserveConstEnums": true,
+        "suppressImplicitAnyIndexErrors": true,
+    },
+    "include": [
+        "./**/*"
+    ]
+}
