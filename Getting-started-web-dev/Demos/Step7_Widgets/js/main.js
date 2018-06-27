@@ -24,8 +24,7 @@ require([
     const privateSchoolsPoly = map.layers.getItemAt(0);
     // Step 1: Create the widget
     const legend = new Legend({
-      // Step 2: Specify any additional properties for the legend. In this case,
-      // we are just setting the view to where the legend should apply
+      // Step 2: Specify any additional properties for the legend.
       view,
       style: "card",
       layerInfos: [{

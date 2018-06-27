@@ -173,7 +173,8 @@ const privateSchoolsPoly = new FeatureLayer({
 });
 
 const map = new Map({
-    basemap: "gray-vector"
+    basemap: "gray-vector",
+    layers: [privateSchoolsPoint, privateSchoolsPoly]
 });
 const view = new MapView({
     map,
@@ -188,9 +189,37 @@ const view = new MapView({
         }
     }
 });
+setupLayerFilter(view);
+async function setupLayerFilter(view) {
+    await view.when;
+    let featuresMap = {};
+    privateSchoolsPoly.watch("loaded", async () => {
+        const select = document.getElementById("selectState") as HTMLSelectElement;
 
-view.when(function() {
-    map.addMany([privateSchoolsPoly, privateSchoolsPoint]);
-    // map.add(privateSchoolsPoly);
-});
+        const query = privateSchoolsPoly.createQuery();
+        query.orderByFields = ["state_name"];
+        const results = await privateSchoolsPoly.queryFeatures(query);
+        results.features.forEach((feature) => {
+            const featureId = feature.attributes.FID;
+            const option = document.createElement("option");
+            option.value = featureId;
+            option.innerHTML = feature.attributes.state_name;;
+            select.appendChild(option);
+            featuresMap[featureId] = feature;
+        });
+
+
+        select.addEventListener("change", (e) => {
+            const featureId = select.value;
+            const expr = select.value === "" ? "" : `FID=${featureId}`;
+            privateSchoolsPoly.definitionExpression = expr;
+            view.goTo(featuresMap[featureId]);
+        });
+
+        view.ui.add("container", "top-right");
+
+    });
+
+}
+
 
