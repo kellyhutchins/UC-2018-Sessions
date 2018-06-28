@@ -1,4 +1,4 @@
-<!-- .slide: data-background="../reveal.js/img/bg-1.png" -->
+<!-- .slide: data-background="../reveal.js/img/title.png" -->
 <!-- .slide: class="title" -->
 <br>
 <br>
@@ -10,6 +10,7 @@ Heather Gonzago and Kelly  Hutchins
 
 ----
 
+<!-- .slide: data-background="../reveal.js/img/slide3.png" -->
 ### **Agenda**
 </br>
  - Setup
@@ -433,25 +434,12 @@ view.ui.add(searchWidget, "top-right");
 
 ----
 
-### **Additional Sessions (Introduction)**
+<!-- .slide: data-background="../reveal.js/img/see-us-here.png" -->
 
-<a><img style="float:bottom;" src="Images/Intro_Sessions.png" alt="Introduction_Sessions"</a>
-
-----
-
-### **Additional Sessions (Advanced)**
-
-<a><img style="float:bottom;" src="Images/Advanced_Sessions.png" alt="Advanced_Sessions"</a>
 
 ----
 
-<!-- .slide: data-background="../reveal.js/img/bg-final.jpg" -->
-
-## Questions?
-
-**Help us to improve** by filling out the survey
-
-![Survey](Images/survey-slide.png)
+<!-- .slide: data-background="../reveal.js/img/survey.png" -->
 
 ----
 
