@@ -46,7 +46,7 @@
             },
             {
                 name: "TemplateApplicationBase",
-                location: templateAppPath + "/node_modules/@esri/application-base-js",
+                location: distPath + "/application-base-js",
                 main: "ApplicationBase"
             },
             {
