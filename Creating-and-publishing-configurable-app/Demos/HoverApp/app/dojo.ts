@@ -43,7 +43,7 @@
     },
     {
       name: "ApplicationBase",
-      location: `${distPath}/node_modules/@esri/application-base-js`,
+      location: `${distPath}/app/application-base-js`,
       main: "ApplicationBase"
     },
     {
