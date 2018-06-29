@@ -222,8 +222,6 @@ class MapExample {
           content: legendWidget
         });
         this.view.ui.add(expand, this.base.config.legendPostion);
-
-
       }
     }
   }
