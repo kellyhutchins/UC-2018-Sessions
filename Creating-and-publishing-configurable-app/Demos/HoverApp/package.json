@@ -26,10 +26,15 @@
   },
   "scripts": {
     "start": "npm-run-all --parallel watch:sass watch:ts",
+    "copy:node_modules": "cpx './node_modules/@esri/**/*.js' app",
     "watch:ts": "tsc --watch",
-    "watch:sass": "node-sass --watch ./styles -o ./styles"
+    "build:ts": "tsc",
+    "build:sass": "node-sass styles/main.scss styles/main.css",
+    "watch:sass": "node-sass --watch ./styles -o ./styles",
+    "deploy": "npm run build:sass & npm run build:ts & npm run copy:node_modules"
   },
   "dependencies": {
+    "cpx": "^1.5.0",
     "node-sass": "^4.9.0",
     "tslib": "^1.9.3"
   }
