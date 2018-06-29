@@ -1,0 +1,33 @@
+{
+  "appid": "",
+  "group": "",
+  "title": "",
+  "webmap": "default",
+  "dockPopup": false,
+  "filterQuery": null,
+  "filterLayer": "LiteraryRoadTrips_6914",
+  "filterField": "book",
+  "search": true,
+  "searchPosition": "top-right",
+  "legend": true,
+  "legendPostion": "bottom-right",
+  "home": true,
+  "portalUrl": "https://www.arcgis.com",
+  "oauthappid": "",
+  "proxyUrl": "",
+  "units": "",
+  "helperServices": {
+    "geometry": {
+      "url": null
+    },
+    "printTask": {
+      "url": null
+    },
+    "elevationSync": {
+      "url": null
+    },
+    "geocode": [{
+      "url": null
+    }]
+  }
+}
