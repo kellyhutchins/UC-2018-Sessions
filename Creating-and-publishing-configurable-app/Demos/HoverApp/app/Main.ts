@@ -171,10 +171,12 @@ class MapExample {
   }
   async addUrlFilterSupport() {
     // filter by url param to see only some content
-    if (this.base.config.filterQuery && this.base.config.filterLayer && this.base.config.filterField) {
+    if (this.base.config.filterQuery && this.base.config.filterLayer) {
+      const layerId = this.base.config.filterLayer.id;
+      const layerField = this.base.config.filterLayer.fields[0].fields[0];
       // get the layer and filter to show only selected features  
-      const filterLayer = this.view.map.findLayerById(this.base.config.filterLayer) as esri.FeatureLayer;
-      const expression = `${this.base.config.filterField}='${this.base.config.filterQuery}'`;
+      const filterLayer = this.view.map.findLayerById(layerId) as esri.FeatureLayer;
+      const expression = `${layerField}='${this.base.config.filterQuery}'`;
       // zoom to queried features 
       const flayerView = await this.view.whenLayerView(filterLayer) as esri.FeatureLayerView;
       watchUtils.whenFalseOnce(flayerView, "updating", async () => {
@@ -221,7 +223,7 @@ class MapExample {
           view: this.view,
           content: legendWidget
         });
-        this.view.ui.add(expand, this.base.config.legendPostion);
+        this.view.ui.add(expand, this.base.config.legendPosition);
       }
     }
   }

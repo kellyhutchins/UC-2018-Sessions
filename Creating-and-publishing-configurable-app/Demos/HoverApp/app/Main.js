@@ -165,14 +165,16 @@ define(["require", "exports", "esri/core/watchUtils", "esri/core/requireUtils", 
         };
         MapExample.prototype.addUrlFilterSupport = function () {
             return __awaiter(this, void 0, void 0, function () {
-                var filterLayer_1, expression_1, flayerView_1;
+                var layerId, layerField, filterLayer_1, expression_1, flayerView_1;
                 var _this = this;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
-                            if (!(this.base.config.filterQuery && this.base.config.filterLayer && this.base.config.filterField)) return [3 /*break*/, 2];
-                            filterLayer_1 = this.view.map.findLayerById(this.base.config.filterLayer);
-                            expression_1 = this.base.config.filterField + "='" + this.base.config.filterQuery + "'";
+                            if (!(this.base.config.filterQuery && this.base.config.filterLayer)) return [3 /*break*/, 2];
+                            layerId = this.base.config.filterLayer.id;
+                            layerField = this.base.config.filterLayer.fields[0].fields[0];
+                            filterLayer_1 = this.view.map.findLayerById(layerId);
+                            expression_1 = layerField + "='" + this.base.config.filterQuery + "'";
                             return [4 /*yield*/, this.view.whenLayerView(filterLayer_1)];
                         case 1:
                             flayerView_1 = _a.sent();
@@ -245,7 +247,7 @@ define(["require", "exports", "esri/core/watchUtils", "esri/core/requireUtils", 
                                     view: this.view,
                                     content: legendWidget
                                 });
-                                this.view.ui.add(expand, this.base.config.legendPostion);
+                                this.view.ui.add(expand, this.base.config.legendPosition);
                             }
                             _a.label = 6;
                         case 6: return [2 /*return*/];
