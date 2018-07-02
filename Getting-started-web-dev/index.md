@@ -3,8 +3,8 @@
 <br>
 <br>
 <br>
-### Getting Started with Web Development 
-### and the ArcGIS API for JavaScript
+### ArcGIS API for JavaScript:
+### An Introduction
 <br>
 Heather Gonzago and Kelly  Hutchins
 
@@ -28,7 +28,7 @@ Heather Gonzago and Kelly  Hutchins
   </br>
   - Concepts remain similar between versions 3.x and 4.x</br>
   </br>
-  - <a href="https://github.com/hgonzago/DevSummit-presentations" target="_blank">https://github.com/hgonzago/DevSummit-presentations</a>
+  - <a href="https://github.com/kellyhutchins/UC-2018-Sessions" target="_blank">https://github.com/kellyhutchins/UC-2018-Sessions</a>
 
 ----
 
@@ -124,8 +124,8 @@ Visualize data within Map or Scene
 const view = new MapView({
   container: "viewDiv",
   map,
-  zoom: 12,
-  center: [-117.16, 32.77]
+  zoom: 3,
+  center: [-99.14, 36.48]
 });
 </code></pre>
 <pre><code data-trim>
