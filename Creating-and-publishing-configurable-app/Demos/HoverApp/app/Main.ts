@@ -243,7 +243,6 @@ class MapExample {
                 features: [feature],
                 updateLocationEnabled: true
               });
-
             }
           } else {
             this.setCursor("default");

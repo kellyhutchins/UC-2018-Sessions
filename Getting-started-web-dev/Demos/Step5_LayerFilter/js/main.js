@@ -2,9 +2,10 @@ require([
   "esri/Map",
   "esri/layers/FeatureLayer",
   "esri/views/MapView",
+  "esri/core/watchUtils",
   "esri/PopupTemplate",
   "dojo/domReady!"
-], function (Map, FeatureLayer, MapView, PopupTemplate) {
+], function (Map, FeatureLayer, MapView, watchUtils, PopupTemplate) {
   const defaultSym = {
     type: "simple-fill", // autocasts as new SimpleFillSymbol
     outline: {
@@ -188,37 +189,37 @@ require([
   });
   // Create an object to hold key/value pairs for feature navigation
   let featuresMap = {};
-
   view.when(function () {
-    privateSchoolsPoly.watch("loaded", function () {
-      // If the layer is loaded and ready, query all the features
-      const select = document.getElementById("selectState");
-
-      const query = privateSchoolsPoly.createQuery();
-      query.orderByFields = ["state_name"];
-      privateSchoolsPoly.queryFeatures(query).then(function (results) {
-        results.features.forEach(function (feature) {
-          const featureId = feature.attributes.FID;
-          const option = document.createElement("option");
-          option.value = featureId;
-          option.innerHTML = feature.attributes.state_name;;
-          select.appendChild(option);
-          featuresMap[featureId] = feature;
+    view.whenLayerView(privateSchoolsPoly).then(function (layerView) {
+      watchUtils.whenFalseOnce(layerView, "updating", function () {
+        // If the layer is loaded and ready, query all the features
+        const select = document.getElementById("selectState");
+        const query = layerView.layer.createQuery();
+        query.orderByFields = ["state_name"];
+        layerView.queryFeatures(query).then(function (results) {
+          results.features.forEach(function (feature) {
+            const featureId = feature.attributes.FID;
+            const option = document.createElement("option");
+            option.value = featureId;
+            option.innerHTML = feature.attributes.state_name;;
+            select.appendChild(option);
+            featuresMap[featureId] = feature;
+          });
         });
+
+        // Listen for the change event on the dropdown
+        // and set the layer's definition expression to the chosen value
+        select.addEventListener("change", function (e) {
+          const featureId = select.value;
+          const expr = select.value === "" ? "" : "FID = '" + featureId + "'";
+          privateSchoolsPoly.definitionExpression = expr;
+
+          // Navigate to the selected feature;
+          view.goTo(featuresMap[featureId]);
+
+        });
+        view.ui.add("container", "top-right");
       });
-
-      // Listen for the change event on the dropdown
-      // and set the layer's definition expression to the chosen value
-      select.addEventListener("change", function (e) {
-        const featureId = select.value;
-        const expr = select.value === "" ? "" : "FID = '" + featureId + "'";
-        privateSchoolsPoly.definitionExpression = expr;
-
-        // Navigate to the selected feature;
-        view.goTo(featuresMap[featureId]);
-
-      });
-      view.ui.add("container", "top-right");
     });
   });
 });
