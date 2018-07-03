@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/renderers/SimpleRenderer", "esri/PopupTemplate"], function (require, exports, Map_1, MapView_1, FeatureLayer_1, SimpleRenderer_1, PopupTemplate_1) {
+define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer", "esri/renderers/SimpleRenderer", "esri/PopupTemplate", "esri/core/watchUtils"], function (require, exports, Map_1, MapView_1, FeatureLayer_1, SimpleRenderer_1, PopupTemplate_1, watchUtils) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     Map_1 = __importDefault(Map_1);
@@ -220,15 +220,18 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
     setupLayerFilter(view);
     function setupLayerFilter(view) {
         return __awaiter(this, void 0, void 0, function () {
-            var featuresMap;
+            var layerView, featuresMap;
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, view.when];
                     case 1:
                         _a.sent();
+                        return [4 /*yield*/, view.whenLayerView(privateSchoolsPoly)];
+                    case 2:
+                        layerView = _a.sent();
                         featuresMap = {};
-                        privateSchoolsPoly.watch("loaded", function () { return __awaiter(_this, void 0, void 0, function () {
+                        watchUtils.whenFalseOnce(layerView, "updating", function () { return __awaiter(_this, void 0, void 0, function () {
                             var select, query, results;
                             return __generator(this, function (_a) {
                                 switch (_a.label) {

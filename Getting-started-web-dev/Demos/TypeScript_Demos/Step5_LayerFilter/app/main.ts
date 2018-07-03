@@ -3,6 +3,7 @@ import MapView from "esri/views/MapView";
 import FeatureLayer from "esri/layers/FeatureLayer";
 import SimpleRenderer from "esri/renderers/SimpleRenderer";
 import PopupTemplate from "esri/PopupTemplate";
+import watchUtils = require("esri/core/watchUtils");
 
 const defaultSym = {
     type: "simple-fill", // autocasts as new SimpleFillSymbol()
@@ -12,7 +13,6 @@ const defaultSym = {
         width: 0.5
     }
 };
-
 
 /******************************************************************
  *
@@ -192,8 +192,9 @@ const view = new MapView({
 setupLayerFilter(view);
 async function setupLayerFilter(view) {
     await view.when;
+    const layerView = await view.whenLayerView(privateSchoolsPoly);
     let featuresMap = {};
-    privateSchoolsPoly.watch("loaded", async () => {
+    watchUtils.whenFalseOnce(layerView, "updating", async () => {
         const select = document.getElementById("selectState") as HTMLSelectElement;
 
         const query = privateSchoolsPoly.createQuery();
