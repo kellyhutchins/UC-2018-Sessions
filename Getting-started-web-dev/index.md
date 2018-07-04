@@ -199,7 +199,7 @@ const view = new MapView({
 </br>
 - <a href="https://developers.arcgis.com/javascript/latest/api-reference/esri-core-Accessor.html#watch" target="_blank">Watch</a> for changes </br>
 <pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 99%;"><code data-trim>
-layer.watch("loadStatus", function(status) { // Do something });
+layer.watch("loadStatus", function(status) {// do something});
 </code></pre></br>
 </br>
 - Can also use <a href="https://developers.arcgis.com/javascript/beta/api-reference/esri-core-watchUtils.html" target="_blank">esri/core/watchUtils</a> utility methods</br>
@@ -227,7 +227,7 @@ layer.watch("loadStatus", function(status) { // Do something });
 const layerRenderer = new UniqueValueRenderer(); // Set the renderer
 const featurelayer = new FeatureLayer({
     url: "featurelayer url",
-    renderer: layerRenderer // Pass in renderer to featurelayer using default properties
+    renderer: layerRenderer // pass in renderer to featurelayer using default properties
 })
 </code></pre>
 
@@ -240,13 +240,13 @@ const featurelayer = new FeatureLayer({
 - Set the renderer's symbol
 <pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 75%;"><code data-trim>
 const symbol = new SimpleMarkerSymbol({
-    // Set the properties
+    // set the properties
 });
 </code></pre>
 <pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 75%;"><code data-trim>
 const renderer = new UniqueValueRenderer({
-    defaultSymbol: symbol, // Set symbol for renderer
-    // Provide additional properties if necessary
+    defaultSymbol: symbol, // set symbol for renderer
+    // provide anymore properties necessary
 });
 </code></pre>
 
@@ -335,7 +335,7 @@ select.addEventListener("change", function(e) {
   privateSchoolsPoly.definitionExpression = expr;
 </code></pre>
 <pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 75%;"><code data-trim>
-privateSchoolsPoly.queryFeatures().then(function(results) {
+layerView.queryFeatures(query).then(function(results) {
   results.features.forEach(function(feature) {
     const featureId = feature.attributes.FID;
     ...
@@ -360,7 +360,7 @@ privateSchoolsPoly.queryFeatures().then(function(results) {
 <pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 99%;"><code data-trim>
 const map = new WebMap({
     portalItem: {
-      id: "8444e275037549c1acab02d2626daaee" // Remember portalItem is autocasted
+      id: "209aa768f537468cb5f76f35baa7e013" // Remember, portalItem is autocasted
     }
 });
 </code></pre>
