@@ -202,7 +202,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
     });
     var map = new Map_1.default({
         basemap: "gray-vector",
-        layers: [privateSchoolsPoint, privateSchoolsPoly]
+        layers: [privateSchoolsPoly, privateSchoolsPoint]
     });
     var view = new MapView_1.default({
         map: map,
@@ -215,12 +215,17 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                 buttonEnabled: false,
                 breakpoint: false
             }
+        },
+        highlightOptions: {
+            // yellow with 50% transparency
+            color: "#ffff99",
+            fillOpacity: 0.5
         }
     });
     setupLayerFilter(view);
     function setupLayerFilter(view) {
         return __awaiter(this, void 0, void 0, function () {
-            var layerView, featuresMap;
+            var layerView, featuresMap, highlight;
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -253,8 +258,10 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/layers/Fea
                                         });
                                         select.addEventListener("change", function (e) {
                                             var featureId = select.value;
-                                            var expr = select.value === "" ? "" : "FID=" + featureId;
-                                            privateSchoolsPoly.definitionExpression = expr;
+                                            if (highlight) {
+                                                highlight.remove();
+                                            }
+                                            highlight = layerView.highlight(parseInt(featureId));
                                             view.goTo(featuresMap[featureId]);
                                         });
                                         view.ui.add("container", "top-right");

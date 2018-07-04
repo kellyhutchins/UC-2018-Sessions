@@ -8,15 +8,20 @@
     <title>Step 1: Create a map</title>
     <link rel="stylesheet" href="https://js.arcgis.com/4.8/esri/css/main.css">
     <link rel="stylesheet" href="css/main.css">
+
     <script>
         var locationPath = location.pathname.replace(/\/[^\/]+$/, "");
         window.dojoConfig = {
+            has: {
+            "esri-featurelayer-webgl": 1
+          },
             packages: [{
                 name: "app",
                 location: locationPath + "/app"
             }]
         }
     </script>
+
     <script src="https://js.arcgis.com/4.8"></script>
 </head>
 

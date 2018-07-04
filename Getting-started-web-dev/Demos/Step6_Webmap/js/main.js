@@ -20,7 +20,7 @@ require([
   const view = new MapView({
     container: "viewDiv",
     // Step 2: Set the view's map to that of the specified webmap above
-    map
+    map: map
   });
 
 });

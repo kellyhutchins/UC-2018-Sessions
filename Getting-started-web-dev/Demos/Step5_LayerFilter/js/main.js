@@ -6,6 +6,7 @@ require([
   "esri/PopupTemplate",
   "dojo/domReady!"
 ], function (Map, FeatureLayer, MapView, watchUtils, PopupTemplate) {
+  let highlight;
   const defaultSym = {
     type: "simple-fill", // autocasts as new SimpleFillSymbol
     outline: {
@@ -79,7 +80,7 @@ require([
     // Private School locations
     url: "https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Private_Schools/FeatureServer",
     renderer: schoolLocationRenderer,
-    minScale: 3750891, // only show at state level and below
+    minScale: 6000000, // only show at state level and below
     maxScale: 0
   });
 
@@ -170,12 +171,13 @@ require([
     popupTemplate
   });
 
-  // Set map's basemap
+  // Set map's basemap and add the layers
   const map = new Map({
     basemap: "gray-vector",
     layers: [privateSchoolsPoly, privateSchoolsPoint]
   });
 
+  // Set the MapView with additional properties
   const view = new MapView({
     container: "viewDiv",
     map,
@@ -185,6 +187,11 @@ require([
       dockOptions: {
         position: "bottom-right"
       }
+    },
+    highlightOptions: {
+      // yellow with 50% transparency
+      color: "#ffff99",
+      fillOpacity: 0.5
     }
   });
   // Create an object to hold key/value pairs for feature navigation
@@ -195,29 +202,42 @@ require([
         // If the layer is loaded and ready, query all the features
         const select = document.getElementById("selectState");
         const query = layerView.layer.createQuery();
+        // Order the states alphabetically
         query.orderByFields = ["state_name"];
+        // Query the features within the LayerView then
+        // iterate through each and set the dropdown list to display
+        // the state name alphabetically
         layerView.queryFeatures(query).then(function (results) {
           results.features.forEach(function (feature) {
             const featureId = feature.attributes.FID;
             const option = document.createElement("option");
             option.value = featureId;
-            option.innerHTML = feature.attributes.state_name;;
+            option.innerHTML = feature.attributes.state_name;
             select.appendChild(option);
+            // Create a collection of features
+            // to be used for zooming to the selection
             featuresMap[featureId] = feature;
           });
         });
 
         // Listen for the change event on the dropdown
-        // and set the layer's definition expression to the chosen value
+        // and highlight the selected feature based off
+        // of its FID
         select.addEventListener("change", function (e) {
           const featureId = select.value;
-          const expr = select.value === "" ? "" : "FID = '" + featureId + "'";
-          privateSchoolsPoly.definitionExpression = expr;
+          
+          if (highlight) {
+            highlight.remove();
+          }
+
+          // Highlight query results
+          // featureId is String so convert to Number
+          highlight = layerView.highlight(parseInt(featureId));
 
           // Navigate to the selected feature;
           view.goTo(featuresMap[featureId]);
-
         });
+
         view.ui.add("container", "top-right");
       });
     });

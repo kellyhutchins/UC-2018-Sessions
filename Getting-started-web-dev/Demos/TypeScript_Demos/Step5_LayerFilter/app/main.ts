@@ -174,7 +174,7 @@ const privateSchoolsPoly = new FeatureLayer({
 
 const map = new Map({
     basemap: "gray-vector",
-    layers: [privateSchoolsPoint, privateSchoolsPoly]
+    layers: [privateSchoolsPoly, privateSchoolsPoint]
 });
 const view = new MapView({
     map,
@@ -187,6 +187,11 @@ const view = new MapView({
             buttonEnabled: false,
             breakpoint: false
         }
+    },
+    highlightOptions: {
+        // yellow with 50% transparency
+        color: "#ffff99",
+        fillOpacity: 0.5
     }
 });
 setupLayerFilter(view);
@@ -194,6 +199,7 @@ async function setupLayerFilter(view) {
     await view.when;
     const layerView = await view.whenLayerView(privateSchoolsPoly);
     let featuresMap = {};
+    let highlight;
     watchUtils.whenFalseOnce(layerView, "updating", async () => {
         const select = document.getElementById("selectState") as HTMLSelectElement;
 
@@ -209,11 +215,14 @@ async function setupLayerFilter(view) {
             featuresMap[featureId] = feature;
         });
 
-
         select.addEventListener("change", (e) => {
             const featureId = select.value;
-            const expr = select.value === "" ? "" : `FID=${featureId}`;
-            privateSchoolsPoly.definitionExpression = expr;
+
+            if(highlight) {
+                highlight.remove();
+            }
+            highlight = layerView.highlight(parseInt(featureId));
+
             view.goTo(featuresMap[featureId]);
         });
 
