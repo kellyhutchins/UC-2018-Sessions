@@ -318,32 +318,32 @@ const featurelayer = new FeatureLayer({
 
 ----
 
-### **Filtering data**
+### **Querying features**
 
-- FeatureLayer definition expressions
-  - Where clause filters features on the client
+- FeatureLayerView
+  - Query and highlight graphics in the view
   - Use with large datasets
 - FeatureLayer <a href="https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-FeatureLayer.html#querying" target="_blank">queries</a>
 </br>
 </br>
 
 <pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 75%;"><code data-trim>
-const select = document.getElementById("selectState");
-select.addEventListener("change", function(e) {
-  const featureId = select.value;
-  const expr = select.value === "" ? "" : "FID = '" + featureId + "'";
-  privateSchoolsPoly.definitionExpression = expr;
-</code></pre>
-<pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 75%;"><code data-trim>
 layerView.queryFeatures(query).then(function(results) {
   results.features.forEach(function(feature) {
     const featureId = feature.attributes.FID;
     ...
 </code></pre>
+<pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 75%;"><code data-trim>
+const select = document.getElementById("selectState");
+select.addEventListener("change", function(e) {
+  const featureId = select.value;
+  highlight = layerView.highlight(parseInt(featureId));
+  ...
+</code></pre>
 
 ----
 
-### **Demo: Filter features within a layer**
+### **Demo: Query features within a layer**
 
 <a href="Demos/Step5_LayerFilter/" target="_blank">
   <img style="float: center;" src="Images/Step5_Demo.png">
