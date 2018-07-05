@@ -123,7 +123,7 @@ Visualize data within Map or Scene
 <pre><code data-trim>
 const view = new MapView({
   container: "viewDiv",
-  map,
+  map: map,
   zoom: 3,
   center: [-99.14, 36.48]
 });
@@ -131,7 +131,7 @@ const view = new MapView({
 <pre><code data-trim>
 const view = new SceneView({
   container: "viewDiv",
-  map,
+  map: map,
   camera: {
     heading: 210,
     tilt: 78,
@@ -187,7 +187,7 @@ const map = new Map({
     ground: "world-elevation"
 });
 const view = new MapView({
-    map, 
+    map: map, 
     center: [-100, 40], 
     zoom: 6
   });
@@ -199,7 +199,7 @@ const view = new MapView({
 </br>
 - <a href="https://developers.arcgis.com/javascript/latest/api-reference/esri-core-Accessor.html#watch" target="_blank">Watch</a> for changes </br>
 <pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 99%;"><code data-trim>
-layer.watch("loadStatus", function(status) {// do something});
+layer.watch("loadStatus", function(status) { // do something});
 </code></pre></br>
 </br>
 - Can also use <a href="https://developers.arcgis.com/javascript/beta/api-reference/esri-core-watchUtils.html" target="_blank">esri/core/watchUtils</a> utility methods</br>
@@ -227,7 +227,7 @@ layer.watch("loadStatus", function(status) {// do something});
 const layerRenderer = new UniqueValueRenderer(); // Set the renderer
 const featurelayer = new FeatureLayer({
     url: "featurelayer url",
-    renderer: layerRenderer // pass in renderer to featurelayer using default properties
+    renderer: layerRenderer // Pass in renderer to featurelayer using default properties
 })
 </code></pre>
 
@@ -240,13 +240,13 @@ const featurelayer = new FeatureLayer({
 - Set the renderer's symbol
 <pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 75%;"><code data-trim>
 const symbol = new SimpleMarkerSymbol({
-    // set the properties
+    // Set the properties
 });
 </code></pre>
 <pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 75%;"><code data-trim>
 const renderer = new UniqueValueRenderer({
-    defaultSymbol: symbol, // set symbol for renderer
-    // provide anymore properties necessary
+    defaultSymbol: symbol, // Set symbol for renderer
+    // Provide additional properties if necessary
 });
 </code></pre>
 
@@ -303,8 +303,8 @@ const popupTemplate = new PopupTemplate({
 const featurelayer = new FeatureLayer({
     url: "url to the feature layer",
     outFields: ["*"],
-    popupTemplate,
-    renderer
+    popupTemplate: popupTemplate,
+    renderer: renderer
 });
 </code></pre>
 
@@ -381,19 +381,17 @@ const map = new WebMap({
 - Similar coding pattern across all widgets
 <pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 99%;"><code data-trim>
 view.when(function){
-    var featurelayer = map.layers.getItemAt(1);
+    var featurelayer = map.layers.getItemAt(0);
     // 1. Create the widget
-    const legend = new Legend({
-      // 2. Specify properties for widget
-      view,
-      style: "card",
-      layerInfos: [{
-          layer: featurelayer,
-          title: "Name"
-      }]
+    const bookmarks = new Expand({
+      content: new Bookmarks({
+        view: view // Bookmarks view
+      }),
+    view: view, // Expand view
+    expanded: true
   });
     // 3. Add widget to the view UI
-    view.ui.add(legend, "bottom-left");
+    view.ui.add(bookmarks, "top-right");
 });
 </code></pre>
 
@@ -434,12 +432,37 @@ view.ui.add(searchWidget, "top-right");
 
 ----
 
-<!-- .slide: data-background="../reveal.js/img/see-us-here.png" -->
+### **See us here**
 
+| Workshop  |  Location |  Time Frame |
+|---|---|---|
+| Intro repeat | SDCC 30E |Tuesday 7/10, 4PM |     
+| ArcGIS API for JavaScript: What's New | SDCC 31B  | Tuesday 7/10, 10AM |     
+| Building 3D Apps with ArcGIS API for JavaScript  | SDCC 08  | Tuesday 7/10, 2:30PM  |      
+| ArcGIS API for JavaScript: The Road Ahead | SDCC 07 A/B | Wednesday 7/11, 8:30AM |
+| ArcGIS API for JavaScript: Best Practices for Building Apps | SDCC 31A | Wednesday 7/11, 2:30PM | 
+| Debugging ArcGIS API for JavaScript Applications | Demo Theater 06 | Wednesday 7/11, 2:30PM |
+
+----
+
+### **See us here (continued)**
+
+| Workshop  |  Location |  Time Frame |
+|---|---|---|
+| Developing Your Own Widget | SDCC 04 | Thursday 7/12. 8:30AM |
+| 2D Visualization | SDCC 33C | Thursday 7/12, 8:30AM |
+| Building Mobile Apps | SDCC 16A | Thursday 7/12, 8:30AM |
+| 3D Visualization | SDCC 33C | Thursday 7/12, 10AM |
+| Working with Feature Layers, Dynamic Map Services, and OGC in the API| SDCC Ballroom 06D | Thursday 7/12, 10AM |
+
+----
+
+### **Questions???**
 
 ----
 
 <!-- .slide: data-background="../reveal.js/img/survey.png" -->
 
-----
+
+
 
