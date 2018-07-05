@@ -16,7 +16,7 @@ require([
 
   /******************************************************************
    *
-   * LayerRenderer example
+   * LayerRenderer
    *
    ******************************************************************/
 
@@ -82,7 +82,7 @@ require([
   });
   /******************************************************************
    *
-   * Popup example
+   * Popup
    *
    ******************************************************************/
 
@@ -163,8 +163,8 @@ require([
     url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/PrivateSchoolEnrollmentNoRendering/FeatureServer/0",
     outFields: ["*"],
     opacity: 0.8,
-    renderer,
-    popupTemplate
+    renderer: renderer,
+    popupTemplate: popupTemplate
   });
 
   // Set map's basemap
@@ -175,7 +175,7 @@ require([
 
   const view = new MapView({
     container: "viewDiv",
-    map,
+    map: map,
     zoom: 3,
     center: [-99.14, 36.48],
     popup: {

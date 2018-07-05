@@ -15,7 +15,7 @@ require([
 
   /******************************************************************
    *
-   * LayerRenderer example
+   * LayerRenderer
    *
    ******************************************************************/
 
@@ -90,7 +90,7 @@ require([
     // layer without rendering
     url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/PrivateSchoolEnrollmentNoRendering/FeatureServer/0",
     opacity: 0.8,
-    renderer
+    renderer: renderer
   });
 
   // Set map's basemap
@@ -100,7 +100,7 @@ require([
 
   const view = new MapView({
     container: "viewDiv",
-    map,
+    map: map,
     zoom: 3,
     center: [-99.14, 36.48]
   });

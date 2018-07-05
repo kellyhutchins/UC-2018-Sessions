@@ -6,7 +6,7 @@ require([
 ], function (Map, FeatureLayer, MapView) {
   /******************************************************************
    *
-   * Add featurelayers to the map example
+   * Add featurelayers to the map
    *
    ******************************************************************/
 
@@ -26,7 +26,7 @@ require([
 
   const view = new MapView({
     container: "viewDiv",
-    map,
+    map: map,
     zoom: 3,
     center: [-99.14, 36.48]
   });

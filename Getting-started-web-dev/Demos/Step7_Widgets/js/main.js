@@ -2,9 +2,10 @@ require([
   "esri/WebMap",
   "esri/views/MapView",
   "esri/widgets/Legend",
-  "esri/widgets/Search",
+  "esri/widgets/Bookmarks",
+  "esri/widgets/Expand",
   "dojo/domReady!"
-], function (WebMap, MapView, Legend, Search) {
+], function (WebMap, MapView, Legend, Bookmarks, Expand) {
   const map = new WebMap({
     portalItem: {
       // autocast
@@ -17,40 +18,35 @@ require([
   });
   /******************************************************************
    *
-   * Widget example - Add legend widget
+   * Add Expand, Legend, and Bookmarks widgets
    *
    ******************************************************************/
   view.when(function () {
     const privateSchoolsPoly = map.layers.getItemAt(0);
-    // Step 1: Create the widget
-    const legend = new Legend({
-      // Step 2: Specify any additional properties for the legend.
-      view,
-      style: "card",
-      layerInfos: [{
-        layer: privateSchoolsPoly,
-        title: "Private school enrollment"
-      }]
+    // Step 1: Create the Expand widget to hold
+    // the Legend widget and 
+    // Step 2. Specify properties
+    const legend = new Expand({
+      content: new Legend({
+      view: view,
+      style: "card"
+    }),
+    view: view, // Expand view
+    expanded: true
+  });
+
+    // Create the Expand widget to hold the Bookmarks
+    // widget and specify properties
+    const bookmarks = new Expand({
+      content: new Bookmarks({
+        view: view // Bookmarks view
+      }),
+      view: view, // Expand view
+      expanded: false
     });
-    const searchWidget = new Search({
-      view,
-      sources: [{
-        featureLayer: {
-          url: privateSchoolsPoly.url,
-          outFields: ["*"],
-          popupTemplate: privateSchoolsPoly.popupTemplate
-        },
-        searchFields: ["state_abbr", "state_name"],
-        displayField: "state_name",
-        exactMatch: false,
-        outFields: ["*"],
-        name: "State name",
-        placeholder: "Search by state name",
-        suggestionsEnabled: true
-      }]
-    });
-    // Step 3: Add the widget to the view's UI, specify the docking position as well
+
+    // Step 3: Add the widgets to the view's UI, specify the docking position as well
     view.ui.add(legend, "bottom-left");
-    view.ui.add(searchWidget, "top-right");
+    view.ui.add(bookmarks, "top-right");
   });
 });
