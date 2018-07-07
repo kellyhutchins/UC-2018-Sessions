@@ -28,12 +28,14 @@ require([
     // Step 2. Specify properties
     const legend = new Expand({
       content: new Legend({
-      view: view,
-      style: "card"
-    }),
-    view: view, // Expand view
-    expanded: true
-  });
+        view: view,
+        style: "card"
+      }),
+      view: view, // Expand view
+      expandIconClass: "esri-icon-layers",
+      expandTooltip: "Legend",
+      group: "top-right"
+    });
 
     // Create the Expand widget to hold the Bookmarks
     // widget and specify properties
@@ -42,11 +44,16 @@ require([
         view: view // Bookmarks view
       }),
       view: view, // Expand view
-      expanded: false
+      expandIconClass: "esri-icon-bookmark",
+      expandTooltip: "Bookmarks",
+      group: "top-right" 
     });
 
+    if (legend) {
+      legend.expand();
+    }
+
     // Step 3: Add the widgets to the view's UI, specify the docking position as well
-    view.ui.add(legend, "bottom-left");
-    view.ui.add(bookmarks, "top-right");
+    view.ui.add([legend, bookmarks], "top-right");
   });
 });
