@@ -1,16 +1,19 @@
 import WebMap from "esri/WebMap";
 import MapView from "esri/views/MapView";
 import Legend from "esri/widgets/Legend";
-import Search from "esri/widgets/Search";
+import Expand from "esri/widgets/Expand";
+import Bookmarks from "esri/widgets/Bookmarks";
+
 
 import esri = __esri;
 
 const map = new WebMap({
-    portalItem: {
-        // autocast
-        id: "209aa768f537468cb5f76f35baa7e013"
-    }
+  portalItem: {
+    // autocast
+    id: "209aa768f537468cb5f76f35baa7e013"
+  }
 });
+
 const view = new MapView({
     map,
     container: "viewDiv",
@@ -19,35 +22,34 @@ const view = new MapView({
 });
 
 view.when(() => {
-    const privateSchoolsPoly = map.layers.getItemAt(0) as esri.FeatureLayer;
-    // Step 1: Create the widget 
-    const legend = new Legend({
-        view,
-        style: "card",
-        layerInfos: [{
-            layer: privateSchoolsPoly,
-            title: "Private school enrollment"
-        }]
+  const privateSchoolsPoly = map.layers.getItemAt(0) as esri.FeatureLayer;
+    // Step 1: Create the widget
+    const bookmarks = new Expand({
+      content: new Bookmarks({
+          view // Bookmarks view
+      }),
+      view, // Expand view
+      expandIconClass: "esri-icon-bookmark",
+      expandTooltip: "Bookmarks",
+      group: "top-right" 
     });
-    const searchWidget = new Search({
-        view,
-        sources: [{
-            featureLayer: {
-                url: privateSchoolsPoly.url,
-                outFields: ["*"],
-                popupTemplate: privateSchoolsPoly.popupTemplate
-            },
-            searchFields: ["state_abbr", "state_name"],
-            displayField: "state_name",
-            exactMatch: false,
-            outFields: ["*"],
-            name: "State name",
-            placeholder: "Search by state name",
-            suggestionsEnabled: true
-        } as esri.FeatureLayerSource]
+
+    const legend = new Expand({
+        content: new Legend({
+            view, // Legend view
+            style: "card"
+        }),
+        view, // Expand view
+        expandIconClass: "esri-icon-layers",
+        expandTooltip: "Legend",
+        group: "top-right"
     });
-    // Step 3: Add the widget to the view's UI, specify the docking position as well
-    view.ui.add(legend, "bottom-left");
-    view.ui.add(searchWidget, "top-right");
+
+    if (legend) {
+      legend.expand();
+    }
+
+    // Step 3: Add the widgets to the view's UI, specify the group position as well
+    view.ui.add([legend, bookmarks], "top-right");
 
 });
