@@ -14,7 +14,7 @@ require([
   });
   const view = new MapView({
     container: "viewDiv",
-    map
+    map: map
   });
   /******************************************************************
    *
