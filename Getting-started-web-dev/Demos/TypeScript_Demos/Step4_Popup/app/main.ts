@@ -189,7 +189,7 @@ const view = new MapView({
     }
 });
 
-view.when(function() {
+view.when(() => {
     map.addMany([privateSchoolsPoly, privateSchoolsPoint]);
     // map.add(privateSchoolsPoly);
 });

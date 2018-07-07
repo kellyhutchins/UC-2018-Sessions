@@ -100,7 +100,7 @@ const view = new MapView({
     center: [-99.14, 36.48]
 });
 
-view.when(function() {
+view.when(() => {
     map.addMany([privateSchoolsPoly, privateSchoolsPoint]);
     // map.add(privateSchoolsPoly);
 });
