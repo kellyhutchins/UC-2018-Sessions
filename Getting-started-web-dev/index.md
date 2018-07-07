@@ -382,17 +382,16 @@ const map = new WebMap({
 <pre style="display:inline-block; padding: 5px; margin: 10px auto; width: 99%;"><code data-trim>
 view.when(function){
     var featurelayer = map.layers.getItemAt(0);
-    // 1. Create the widget
-    const bookmarks = new Expand({
-      content: new Bookmarks({
-        view: view // Bookmarks view
+    // Create widget and set its properties
+    const legend = new Expand({ 
+      content: new Legend({
+        view: view,
+        style: "card"
       }),
-    view: view, // Expand view
-    expanded: true
+      view: view, // Expand view
+      group: "top-right"
+    });
   });
-    // 3. Add widget to the view UI
-    view.ui.add(bookmarks, "top-right");
-});
 </code></pre>
 
 ----
@@ -406,8 +405,7 @@ view.when(function){
   </br>
 
 <pre style="padding: 5px; margin: 10px auto; width: 50%;"><code data-trim>
-view.ui.add(legend, "bottom-left");
-view.ui.add(searchWidget, "top-right");
+view.ui.add([legend, bookmarks], "top-right");
 </code></pre>
 
 ----
