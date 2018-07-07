@@ -1,5 +1,5 @@
 {
-  "name": "step2",
+  "name": "Step2_Layer",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,8 +9,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@types/arcgis-js-api": "^4.7.0",
-    "tslib": "^1.9.2"
+  "dependencies": {
+    "@types/arcgis-js-api": "^4.8.0",
+    "tslib": "^1.9.3"
   }
 }

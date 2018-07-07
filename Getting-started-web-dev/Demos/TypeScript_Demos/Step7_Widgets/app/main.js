@@ -1,13 +1,14 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-define(["require", "exports", "esri/WebMap", "esri/views/MapView", "esri/widgets/Legend", "esri/widgets/Search"], function (require, exports, WebMap_1, MapView_1, Legend_1, Search_1) {
+define(["require", "exports", "esri/WebMap", "esri/views/MapView", "esri/widgets/Legend", "esri/widgets/Expand", "esri/widgets/Bookmarks"], function (require, exports, WebMap_1, MapView_1, Legend_1, Expand_1, Bookmarks_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     WebMap_1 = __importDefault(WebMap_1);
     MapView_1 = __importDefault(MapView_1);
     Legend_1 = __importDefault(Legend_1);
-    Search_1 = __importDefault(Search_1);
+    Expand_1 = __importDefault(Expand_1);
+    Bookmarks_1 = __importDefault(Bookmarks_1);
     var map = new WebMap_1.default({
         portalItem: {
             // autocast
@@ -22,35 +23,31 @@ define(["require", "exports", "esri/WebMap", "esri/views/MapView", "esri/widgets
     });
     view.when(function () {
         var privateSchoolsPoly = map.layers.getItemAt(0);
-        // Step 1: Create the widget 
-        var legend = new Legend_1.default({
+        // Step 1: Create the widget
+        var bookmarks = new Expand_1.default({
+            content: new Bookmarks_1.default({
+                view: view // Bookmarks view
+            }),
             view: view,
-            style: "card",
-            layerInfos: [{
-                    layer: privateSchoolsPoly,
-                    title: "Private school enrollment"
-                }]
+            expandIconClass: "esri-icon-bookmark",
+            expandTooltip: "Bookmarks",
+            group: "top-right"
         });
-        var searchWidget = new Search_1.default({
+        var legend = new Expand_1.default({
+            content: new Legend_1.default({
+                view: view,
+                style: "card"
+            }),
             view: view,
-            sources: [{
-                    featureLayer: {
-                        url: privateSchoolsPoly.url,
-                        outFields: ["*"],
-                        popupTemplate: privateSchoolsPoly.popupTemplate
-                    },
-                    searchFields: ["state_abbr", "state_name"],
-                    displayField: "state_name",
-                    exactMatch: false,
-                    outFields: ["*"],
-                    name: "State name",
-                    placeholder: "Search by state name",
-                    suggestionsEnabled: true
-                }]
+            expandIconClass: "esri-icon-layers",
+            expandTooltip: "Legend",
+            group: "top-right"
         });
-        // Step 3: Add the widget to the view's UI, specify the docking position as well
-        view.ui.add(legend, "bottom-left");
-        view.ui.add(searchWidget, "top-right");
+        if (legend) {
+            legend.expand();
+        }
+        // Step 3: Add the widgets to the view's UI, specify the group position as well
+        view.ui.add([legend, bookmarks], "top-right");
     });
 });
 //# sourceMappingURL=main.js.map
